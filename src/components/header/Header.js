@@ -3,7 +3,18 @@ import "./header.styles.scss";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase/firebase"
 
-const Header = ({currentUser}) => {
+const Header = ({currentUser, initials}) => {
+
+  let firstName = null;
+  let lastName = null;
+
+  if(initials){
+    const fullName = initials.split(" ");
+    firstName = fullName[0][0];
+    lastName = fullName[1][0];
+
+  }
+  
     return (
       <div className="header">
         <Link className="logo-container" to="/">
@@ -16,6 +27,14 @@ const Header = ({currentUser}) => {
           <Link className="option" to="/shop">
             CONTACT
           </Link>
+          {
+            initials ?
+              <div>
+                {`${firstName}${lastName}`}
+              </div>
+              : null
+          }
+          
           {
             currentUser ?
             <div className="option" onClick={() => auth.signOut()}>SIGN OUT</div>
