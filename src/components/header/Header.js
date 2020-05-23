@@ -1,9 +1,10 @@
 import React from 'react';
 import "./header.styles.scss";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebase/firebase"
+import { auth } from "../../firebase/firebase";
+import { connect } from "react-redux";
 
-const Header = ({currentUser, initials}) => {
+const Header = ({ currentUser, initials }) => {
 
   let firstName = null;
   let lastName = null;
@@ -28,8 +29,8 @@ const Header = ({currentUser, initials}) => {
             CONTACT
           </Link>
           {
-            initials ?
-              <div>
+            initials 
+              ? <div>
                 {`${firstName}${lastName}`}
               </div>
               : null
@@ -46,4 +47,10 @@ const Header = ({currentUser, initials}) => {
     );
 }
 
-export default Header
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(Header)
